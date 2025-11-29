@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Allotment White Minimal Theme */
+.split-view-view {
+  background: transparent !important;
+}
+
+.sash {
+  background: #e5e5e5 !important;
+  transition: background 0.15s ease;
+  z-index: 10 !important;
+}
+
+.sash:hover {
+  background: #3b82f6 !important;
+  transition: background 0.2s ease !important;
+}
+
+.sash-active {
+  background: #2563eb !important;
+}
+
+.sash-disabled {
+  background: transparent !important;
+}
+
+.sash.-vertical {
+  width: 4px !important;
+}
+
+.sash.-horizontal {
+  height: 4px !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth transitions */
+button, a, [role="button"] {
+  transition: all 0.15s ease;
+}
+
+/* Drag cursor */
+[draggable="true"] {
+  cursor: grab;
+}
+
+[draggable="true"]:active {
+  cursor: grabbing;
+}

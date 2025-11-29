@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 overflow-hidden">
+    
+    <div class="flex h-screen">
+        
+        <!-- Left Sidebar - Members -->
+        <div class="w-20 bg-white shadow-lg flex flex-col items-center py-6 gap-4">
+            <div class="relative group cursor-pointer">
+                <img src="https://i.pravatar.cc/150?img=1" class="w-12 h-12 rounded-full shadow-md transition-transform group-hover:scale-110">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+            </div>
+            <div class="relative group cursor-pointer">
+                <img src="https://i.pravatar.cc/150?img=2" class="w-12 h-12 rounded-full shadow-md transition-transform group-hover:scale-110">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+            </div>
+            <div class="relative group cursor-pointer">
+                <img src="https://i.pravatar.cc/150?img=3" class="w-12 h-12 rounded-full shadow-md transition-transform group-hover:scale-110">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-yellow-400 rounded-full border-2 border-white"></span>
+            </div>
+            <div class="relative group cursor-pointer">
+                <img src="https://i.pravatar.cc/150?img=4" class="w-12 h-12 rounded-full shadow-md transition-transform group-hover:scale-110">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></span>
+            </div>
+            <div class="relative group cursor-pointer">
+                <img src="https://i.pravatar.cc/150?img=5" class="w-12 h-12 rounded-full shadow-md transition-transform group-hover:scale-110">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            
+            <!-- Top Header -->
+            <div class="bg-white shadow-sm px-8 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <h1 class="text-2xl font-semibold text-gray-800">Design Sprint Room</h1>
+                    <div class="flex items-center gap-2 text-sm text-gray-600">
+                        <span class="flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            5 online
+                        </span>
+                        <span class="text-gray-400">•</span>
+                        <span>8 members</span>
+                    </div>
+                </div>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors shadow-sm">
+                    Start Session
+                </button>
+            </div>
+
+            <!-- Sub Header -->
+            <div class="bg-white shadow-sm px-8 py-3 flex items-center justify-between border-t border-gray-100">
+                <div class="flex gap-6">
+                    <button class="tab-btn text-indigo-600 font-medium pb-1 border-b-2 border-indigo-600 transition-colors" data-tab="board">Board</button>
+                    <button class="tab-btn text-gray-600 hover:text-gray-900 font-medium pb-1 border-b-2 border-transparent transition-colors" data-tab="activity">Activity</button>
+                    <button class="tab-btn text-gray-600 hover:text-gray-900 font-medium pb-1 border-b-2 border-transparent transition-colors" data-tab="members">Members</button>
+                </div>
+                <div class="flex items-center gap-4 text-sm">
+                    <span class="text-gray-500">AI Suggestions</span>
+                    <span class="text-gray-300">|</span>
+                    <span class="text-gray-500">Matching Engine</span>
+                </div>
+            </div>
+
+            <!-- Workspace -->
+            <div id="workspace" class="flex-1 relative overflow-hidden bg-gray-100">
+                
+                <!-- Kanban Window -->
+                <div class="window absolute bg-white shadow-xl" style="width: 700px; height: 450px; left: 100px; top: 80px; border: 1px solid #e5e7eb;" data-window="kanban">
+                    <div class="window-header bg-gray-50 border-b border-gray-200 px-3 py-2 cursor-move flex items-center justify-between" style="height: 35px;">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-columns text-blue-600 text-xs"></i>
+                            <span class="text-gray-700 text-xs font-semibold">Kanban Board</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="minimize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-minus text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="maximize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="far fa-square text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="close-btn w-6 h-6 hover:bg-red-100 rounded flex items-center justify-center">
+                                <i class="fas fa-times text-gray-600 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="window-content bg-white overflow-auto" style="height: calc(100% - 35px);">
+                        <div class="grid grid-cols-3 gap-3 p-4 h-full">
+                            <div class="bg-gray-50 rounded p-3">
+                                <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                                    <img src="https://i.pravatar.cc/150?img=1" class="w-6 h-6 rounded-full">
+                                    <span class="text-gray-700 text-xs font-medium">Member A</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-white border border-gray-200 p-2 rounded text-xs text-gray-700">Design mockups</div>
+                                    <div class="bg-white border border-gray-200 p-2 rounded text-xs text-gray-700">User research</div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 rounded p-3">
+                                <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                                    <img src="https://i.pravatar.cc/150?img=2" class="w-6 h-6 rounded-full">
+                                    <span class="text-gray-700 text-xs font-medium">Member B</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-white border border-gray-200 p-2 rounded text-xs text-gray-700">API integration</div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 rounded p-3">
+                                <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                                    <img src="https://i.pravatar.cc/150?img=3" class="w-6 h-6 rounded-full">
+                                    <span class="text-gray-700 text-xs font-medium">Member C</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-white border border-gray-200 p-2 rounded text-xs text-gray-700">Testing</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resize-handle" style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; cursor: nwse-resize;"></div>
+                </div>
+
+                <!-- Notes Window -->
+                <div class="window absolute bg-white shadow-xl" style="width: 450px; height: 350px; left: 850px; top: 100px; border: 1px solid #e5e7eb;" data-window="notes">
+                    <div class="window-header bg-gray-50 border-b border-gray-200 px-3 py-2 cursor-move flex items-center justify-between" style="height: 35px;">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-file-alt text-yellow-600 text-xs"></i>
+                            <span class="text-gray-700 text-xs font-semibold">Notes</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="minimize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-minus text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="maximize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="far fa-square text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="close-btn w-6 h-6 hover:bg-red-100 rounded flex items-center justify-center">
+                                <i class="fas fa-times text-gray-600 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="window-content bg-white overflow-auto" style="height: calc(100% - 35px);">
+                        <textarea class="w-full h-full bg-white p-4 text-sm text-gray-700 resize-none focus:outline-none" placeholder="Type your notes...">Meeting notes:
+- Discuss project timeline
+- Review design feedback
+- Plan next sprint
+
+Action items:
+[ ] Update documentation
+[ ] Schedule follow-up</textarea>
+                    </div>
+                    <div class="resize-handle" style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; cursor: nwse-resize;"></div>
+                </div>
+
+                <!-- Activity Window -->
+                <div class="window absolute bg-white shadow-xl" style="width: 380px; height: 400px; left: 120px; top: 560px; border: 1px solid #e5e7eb;" data-window="activity">
+                    <div class="window-header bg-gray-50 border-b border-gray-200 px-3 py-2 cursor-move flex items-center justify-between" style="height: 35px;">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-history text-green-600 text-xs"></i>
+                            <span class="text-gray-700 text-xs font-semibold">Activity</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="minimize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-minus text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="maximize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="far fa-square text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="close-btn w-6 h-6 hover:bg-red-100 rounded flex items-center justify-center">
+                                <i class="fas fa-times text-gray-600 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="window-content bg-white overflow-auto p-3" style="height: calc(100% - 35px);">
+                        <div class="space-y-3">
+                            <div class="flex gap-2 items-start hover:bg-gray-50 p-2 rounded">
+                                <img src="https://i.pravatar.cc/150?img=1" class="w-7 h-7 rounded-full">
+                                <div class="flex-1">
+                                    <p class="text-xs text-gray-700"><span class="text-blue-600 font-medium">Sarah</span> updated Kanban</p>
+                                    <p class="text-xs text-gray-500">2 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 items-start hover:bg-gray-50 p-2 rounded">
+                                <img src="https://i.pravatar.cc/150?img=2" class="w-7 h-7 rounded-full">
+                                <div class="flex-1">
+                                    <p class="text-xs text-gray-700"><span class="text-blue-600 font-medium">John</span> added a comment</p>
+                                    <p class="text-xs text-gray-500">5 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 items-start hover:bg-gray-50 p-2 rounded">
+                                <img src="https://i.pravatar.cc/150?img=3" class="w-7 h-7 rounded-full">
+                                <div class="flex-1">
+                                    <p class="text-xs text-gray-700"><span class="text-blue-600 font-medium">Emma</span> joined the room</p>
+                                    <p class="text-xs text-gray-500">12 minutes ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resize-handle" style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; cursor: nwse-resize;"></div>
+                </div>
+
+                <!-- Files Window -->
+                <div class="window absolute bg-white shadow-xl" style="width: 500px; height: 300px; left: 520px; top: 580px; border: 1px solid #e5e7eb;" data-window="files">
+                    <div class="window-header bg-gray-50 border-b border-gray-200 px-3 py-2 cursor-move flex items-center justify-between" style="height: 35px;">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-folder text-purple-600 text-xs"></i>
+                            <span class="text-gray-700 text-xs font-semibold">Files</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="minimize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-minus text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="maximize-btn w-6 h-6 hover:bg-gray-200 rounded flex items-center justify-center">
+                                <i class="far fa-square text-gray-600 text-xs"></i>
+                            </button>
+                            <button class="close-btn w-6 h-6 hover:bg-red-100 rounded flex items-center justify-center">
+                                <i class="fas fa-times text-gray-600 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="window-content bg-white overflow-auto p-3" style="height: calc(100% - 35px);">
+                        <div class="space-y-1 text-xs">
+                            <div class="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <i class="fas fa-folder text-yellow-500"></i>
+                                <span class="text-gray-700">Project Documents</span>
+                            </div>
+                            <div class="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <i class="fas fa-file-pdf text-red-500"></i>
+                                <span class="text-gray-700">Design_Brief.pdf</span>
+                            </div>
+                            <div class="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <i class="fas fa-file-image text-blue-500"></i>
+                                <span class="text-gray-700">mockup_v2.png</span>
+                            </div>
+                            <div class="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <i class="fas fa-file-alt text-gray-500"></i>
+                                <span class="text-gray-700">meeting_notes.txt</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resize-handle" style="position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; cursor: nwse-resize;"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right Sidebar - Tools -->
+        <div class="w-20 bg-white shadow-lg flex flex-col items-center py-6 gap-4">
+            <button class="w-12 h-12 rounded-xl bg-indigo-50 hover:bg-indigo-100 flex items-center justify-center transition-all hover:shadow-md group">
+                <i class="fas fa-columns text-indigo-600 group-hover:scale-110 transition-transform"></i>
+            </button>
+            <button class="w-12 h-12 rounded-xl hover:bg-gray-100 flex items-center justify-center transition-all hover:shadow-md group">
+                <i class="fas fa-file-alt text-gray-600 group-hover:scale-110 transition-transform"></i>
+            </button>
+            <button class="w-12 h-12 rounded-xl hover:bg-gray-100 flex items-center justify-center transition-all hover:shadow-md group">
+                <i class="fas fa-history text-gray-600 group-hover:scale-110 transition-transform"></i>
+            </button>
+            <button class="w-12 h-12 rounded-xl hover:bg-gray-100 flex items-center justify-center transition-all hover:shadow-md group">
+                <i class="fas fa-folder text-gray-600 group-hover:scale-110 transition-transform"></i>
+            </button>
+            <button class="w-12 h-12 rounded-xl hover:bg-gray-100 flex items-center justify-center transition-all hover:shadow-md group">
+                <i class="fas fa-cog text-gray-600 group-hover:scale-110 transition-transform"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('text-indigo-600', 'border-indigo-600');
+                    b.classList.add('text-gray-600', 'border-transparent');
+                });
+                btn.classList.remove('text-gray-600', 'border-transparent');
+                btn.classList.add('text-indigo-600', 'border-indigo-600');
+                console.log(`${btn.dataset.tab.charAt(0).toUpperCase() + btn.dataset.tab.slice(1)} Clicked`);
+            });
+        });
+
+        // Window system
+        const workspace = document.getElementById('workspace');
+        const windows = document.querySelectorAll('.window');
+        let dragState = null;
+        let resizeState = null;
+        let zIndex = 1000;
+
+        windows.forEach(win => {
+            const header = win.querySelector('.window-header');
+            const resizeHandle = win.querySelector('.resize-handle');
+            const closeBtn = win.querySelector('.close-btn');
+            const minimizeBtn = win.querySelector('.minimize-btn');
+            const maximizeBtn = win.querySelector('.maximize-btn');
+
+            win.addEventListener('mousedown', () => win.style.zIndex = ++zIndex);
+
+            // Drag
+            header.addEventListener('mousedown', (e) => {
+                if (e.target.closest('button')) return;
+                const rect = win.getBoundingClientRect();
+                const wsRect = workspace.getBoundingClientRect();
+                dragState = {
+                    win,
+                    offsetX: e.clientX - rect.left,
+                    offsetY: e.clientY - rect.top
+                };
+            });
+
+            // Resize
+            resizeHandle.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                resizeState = {
+                    win,
+                    startX: e.clientX,
+                    startY: e.clientY,
+                    startWidth: win.offsetWidth,
+                    startHeight: win.offsetHeight
+                };
+            });
+
+            // Close
+            closeBtn.addEventListener('click', () => win.style.display = 'none');
+
+            // Minimize
+            minimizeBtn.addEventListener('click', () => {
+                const content = win.querySelector('.window-content');
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    win.style.height = win.dataset.prevHeight || 'auto';
+                } else {
+                    win.dataset.prevHeight = win.style.height;
+                    content.style.display = 'none';
+                    win.style.height = '35px';
+                }
+            });
+
+            // Maximize
+            maximizeBtn.addEventListener('click', () => {
+                if (win.dataset.maximized === 'true') {
+                    win.style.left = win.dataset.prevLeft;
+                    win.style.top = win.dataset.prevTop;
+                    win.style.width = win.dataset.prevWidth;
+                    win.style.height = win.dataset.prevHeight;
+                    win.dataset.maximized = 'false';
+                } else {
+                    win.dataset.prevLeft = win.style.left;
+                    win.dataset.prevTop = win.style.top;
+                    win.dataset.prevWidth = win.style.width;
+                    win.dataset.prevHeight = win.style.height;
+                    win.style.left = '0';
+                    win.style.top = '0';
+                    win.style.width = '100%';
+                    win.style.height = '100%';
+                    win.dataset.maximized = 'true';
+                }
+            });
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (dragState) {
+                const wsRect = workspace.getBoundingClientRect();
+                let left = e.clientX - wsRect.left - dragState.offsetX;
+                let top = e.clientY - wsRect.top - dragState.offsetY;
+                left = Math.max(0, Math.min(left, wsRect.width - dragState.win.offsetWidth));
+                top = Math.max(0, Math.min(top, wsRect.height - dragState.win.offsetHeight));
+                dragState.win.style.left = left + 'px';
+                dragState.win.style.top = top + 'px';
+            }
+            if (resizeState) {
+                const width = Math.max(300, resizeState.startWidth + (e.clientX - resizeState.startX));
+                const height = Math.max(200, resizeState.startHeight + (e.clientY - resizeState.startY));
+                resizeState.win.style.width = width + 'px';
+                resizeState.win.style.height = height + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            dragState = null;
+            resizeState = null;
+        });
+
+        // Restore windows from sidebar
+        const toolButtons = document.querySelectorAll('.w-20.bg-white.shadow-lg button');
+        const windowMap = ['kanban', 'notes', 'activity', 'files'];
+        toolButtons.forEach((btn, i) => {
+            if (i < 4) {
+                btn.addEventListener('click', () => {
+                    const win = document.querySelector(`[data-window="${windowMap[i]}"]`);
+                    if (win) {
+                        win.style.display = 'block';
+                        win.style.zIndex = ++zIndex;
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
