@@ -10,25 +10,27 @@ import ResourcesPanel from './components/panels/ResourcesPanel';
 import ActivityPanel from './components/panels/ActivityPanel';
 import ToolsPanel from './components/panels/ToolsPanel';
 import AIPanel from './components/panels/AIPanel';
-import { Users, LayoutDashboard, MessageSquare, FileText, Link, Activity, Wrench, Sparkles, X, Command } from 'lucide-react';
+import { Users, LayoutDashboard, MessageSquare, FileText, Link, Activity, Wrench, Sparkles, X, Command, Zap } from 'lucide-react';
 
 const PANELS = {
-  members: { component: MembersPanel, icon: Users, title: 'Members' },
-  kanban: { component: KanbanPanel, icon: LayoutDashboard, title: 'Kanban' },
-  chat: { component: ChatPanel, icon: MessageSquare, title: 'Chat' },
-  notes: { component: NotesPanel, icon: FileText, title: 'Notes' },
-  resources: { component: ResourcesPanel, icon: Link, title: 'Resources' },
-  activity: { component: ActivityPanel, icon: Activity, title: 'Activity' },
-  tools: { component: ToolsPanel, icon: Wrench, title: 'Tools' },
-  ai: { component: AIPanel, icon: Sparkles, title: 'AI' },
+  members: { component: MembersPanel, icon: Users, title: 'Members', color: 'text-emerald-600' },
+  kanban: { component: KanbanPanel, icon: LayoutDashboard, title: 'Kanban', color: 'text-blue-600' },
+  chat: { component: ChatPanel, icon: MessageSquare, title: 'Chat', color: 'text-purple-600' },
+  notes: { component: NotesPanel, icon: FileText, title: 'Notes', color: 'text-amber-600' },
+  resources: { component: ResourcesPanel, icon: Link, title: 'Resources', color: 'text-cyan-600' },
+  activity: { component: ActivityPanel, icon: Activity, title: 'Activity', color: 'text-rose-600' },
+  tools: { component: ToolsPanel, icon: Wrench, title: 'Tools', color: 'text-indigo-600' },
+  ai: { component: AIPanel, icon: Sparkles, title: 'AI', color: 'text-violet-600' },
 };
 
-function TabBar({ tabs, activeTab, onTabClick, onTabClose, onDragStart, region }) {
+function TabBar({ tabs, activeTab, onTabClick, onTabClose, region }) {
   return (
-    <div className="h-10 bg-gray-50 border-b border-gray-200 flex items-center">
-      {tabs.map((tabId) => {
+    <div className="h-11 bg-gradient-to-r from-slate-50 to-gray-50 border-b border-slate-200/60 flex items-center overflow-x-auto scrollbar-hide">
+      {tabs.map((tabId, index) => {
         const panel = PANELS[tabId];
         const Icon = panel.icon;
+        const isActive = activeTab === tabId;
+        
         return (
           <div
             key={tabId}
@@ -38,22 +40,32 @@ function TabBar({ tabs, activeTab, onTabClick, onTabClose, onDragStart, region }
               e.dataTransfer.setData('fromRegion', region);
             }}
             onClick={() => onTabClick(tabId)}
-            className={`h-10 px-4 flex items-center gap-2 cursor-pointer border-r border-gray-200 group ${
-              activeTab === tabId ? 'bg-white text-gray-900' : 'text-gray-600 hover:bg-gray-100'
-            }`}
+            className={`
+              relative h-11 px-4 flex items-center gap-2.5 cursor-pointer group transition-all duration-200 min-w-fit
+              ${isActive 
+                ? 'bg-white text-slate-900 shadow-sm border-b-2 border-blue-500' 
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+              }
+              ${index > 0 ? 'border-l border-slate-200/60' : ''}
+            `}
           >
-            <Icon size={14} />
-            <span className="text-sm font-medium">{panel.title}</span>
+            <Icon size={15} className={isActive ? panel.color : 'text-slate-500'} />
+            <span className="text-sm font-medium tracking-tight">{panel.title}</span>
+            
             {tabs.length > 1 && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   onTabClose(tabId);
                 }}
-                className="opacity-0 group-hover:opacity-100 ml-2"
+                className="opacity-0 group-hover:opacity-100 ml-1 p-0.5 hover:bg-slate-200 rounded transition-all duration-150"
               >
-                <X size={12} />
+                <X size={12} className="text-slate-500" />
               </button>
+            )}
+            
+            {isActive && (
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-600" />
             )}
           </div>
         );
@@ -68,7 +80,7 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
 
   return (
     <div
-      className="h-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm"
+      className="h-full bg-white border border-slate-200/80 rounded-lg overflow-hidden shadow-sm"
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);
@@ -85,8 +97,9 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
       }}
     >
       {dragOver && (
-        <div className="absolute inset-0 bg-blue-500/10 border-2 border-blue-500 z-50 pointer-events-none" />
+        <div className="absolute inset-0 bg-blue-500/10 border-2 border-blue-500 rounded-lg z-50 pointer-events-none" />
       )}
+      
       <TabBar
         tabs={tabs}
         activeTab={activeTab}
@@ -94,7 +107,8 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
         onTabClose={onTabClose}
         region={region}
       />
-      <div className="h-[calc(100%-2.5rem)] overflow-auto">
+      
+      <div className="h-[calc(100%-2.75rem)] overflow-auto bg-white">
         {Component && <Component />}
       </div>
     </div>
@@ -122,25 +136,40 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-screen bg-gray-100 flex flex-col">
-      <div className="h-12 bg-white border-b border-gray-200 flex items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <LayoutDashboard size={20} />
-          <span className="font-semibold">Room Workspace</span>
+    <div className="h-screen w-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-100 flex flex-col">
+      <div className="h-14 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-6 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-lg">
+            <LayoutDashboard size={18} className="text-white" />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Room Workspace
+            </h1>
+            <p className="text-xs text-slate-500 -mt-0.5">Collaborative workspace</p>
+          </div>
         </div>
-        <button
-          onClick={() => setCmdOpen(true)}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-gray-100 rounded"
-        >
-          <Command size={14} />
-          <span>⌘K</span>
-        </button>
+        
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100/60 rounded-lg">
+            <Zap size={14} className="text-amber-500" />
+            <span className="text-xs font-medium text-slate-600">Live</span>
+          </div>
+          
+          <button
+            onClick={() => setCmdOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 text-sm bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-all duration-200 shadow-lg hover:shadow-xl"
+          >
+            <Command size={14} />
+            <span className="font-medium">⌘K</span>
+          </button>
+        </div>
       </div>
 
-      <div className="flex-1 p-2">
+      <div className="flex-1 p-3">
         <Allotment>
           {layout.left.length > 0 && (
-            <Allotment.Pane minSize={200} preferredSize={250}>
+            <Allotment.Pane minSize={220} preferredSize={280}>
               <PanelRegion
                 region="left"
                 tabs={layout.left}
@@ -155,7 +184,7 @@ export default function App() {
           <Allotment.Pane>
             <Allotment vertical>
               {layout.top.length > 0 && (
-                <Allotment.Pane minSize={60} preferredSize={80}>
+                <Allotment.Pane minSize={80} preferredSize={100}>
                   <PanelRegion
                     region="top"
                     tabs={layout.top}
@@ -181,7 +210,7 @@ export default function App() {
               )}
 
               {layout.bottom.length > 0 && (
-                <Allotment.Pane minSize={200} preferredSize={300}>
+                <Allotment.Pane minSize={220} preferredSize={320}>
                   <PanelRegion
                     region="bottom"
                     tabs={layout.bottom}
@@ -196,7 +225,7 @@ export default function App() {
           </Allotment.Pane>
 
           {layout.right.length > 0 && (
-            <Allotment.Pane minSize={200} preferredSize={250}>
+            <Allotment.Pane minSize={220} preferredSize={280}>
               <PanelRegion
                 region="right"
                 tabs={layout.right}

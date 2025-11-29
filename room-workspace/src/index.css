@@ -10,22 +10,22 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
-/* Allotment White Minimal Theme */
+/* Modern Allotment Styling */
 .split-view-view {
   background: transparent !important;
 }
 
 .sash {
-  background: #e5e5e5 !important;
-  transition: background 0.15s ease;
+  background: #e2e8f0 !important;
+  transition: background 0.2s ease !important;
   z-index: 10 !important;
 }
 
 .sash:hover {
   background: #3b82f6 !important;
-  transition: background 0.2s ease !important;
 }
 
 .sash-active {
@@ -44,10 +44,10 @@ body {
   height: 4px !important;
 }
 
-/* Custom scrollbar */
+/* Modern Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -55,12 +55,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -72,16 +74,79 @@ body {
   scrollbar-width: none;
 }
 
-/* Smooth transitions */
-button, a, [role="button"] {
-  transition: all 0.15s ease;
+/* Enhanced Transitions */
+button, a, [role="button"], .cursor-pointer {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Drag cursor */
+button:hover, a:hover, [role="button"]:hover {
+  transform: translateY(-1px);
+}
+
+button:active, a:active, [role="button"]:active {
+  transform: translateY(0);
+}
+
+/* Drag States */
 [draggable="true"] {
   cursor: grab;
+  transition: all 0.2s ease;
+}
+
+[draggable="true"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 [draggable="true"]:active {
   cursor: grabbing;
+  transform: scale(0.98);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Glass Effect */
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Focus States */
+button:focus-visible, [role="button"]:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Animation Classes */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
