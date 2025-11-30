@@ -1,4 +1,5 @@
-import { Sparkles, Lightbulb, TrendingUp, Users, Clock } from 'lucide-react';
+import { Box, Typography, Stack, Paper } from '@mui/material';
+import { Sparkles, TrendingUp, Users, Clock } from 'lucide-react';
 
 export default function AIPanel() {
   const suggestions = [
@@ -7,47 +8,54 @@ export default function AIPanel() {
       text: 'Consider breaking down the large task into smaller subtasks for better tracking', 
       type: 'productivity',
       icon: TrendingUp,
-      color: 'text-blue-500'
+      color: 'primary.main'
     },
     { 
       id: 2, 
       text: 'Schedule a team sync for project alignment - 3 members are available now', 
       type: 'collaboration',
       icon: Users,
-      color: 'text-purple-500'
+      color: 'secondary.main'
     },
     { 
       id: 3, 
       text: 'Review and update project documentation - last updated 5 days ago', 
       type: 'documentation',
       icon: Clock,
-      color: 'text-orange-500'
+      color: 'warning.main'
     },
   ];
 
   return (
-    <div className="h-full bg-white flex flex-col">
-      <div className="p-3 border-b border-gray-200 flex items-center gap-2">
-        <Sparkles size={16} className="text-gray-600" />
-        <span className="text-sm font-medium text-gray-700">AI Suggestions</span>
-      </div>
-      <div className="flex-1 overflow-y-auto p-2">
-        {suggestions.map((suggestion) => {
-          const Icon = suggestion.icon;
-          return (
-            <div
-              key={suggestion.id}
-              className="flex gap-3 p-3 mb-2 rounded-md bg-gray-50 border border-gray-200 hover:border-gray-300 transition-colors cursor-pointer"
-            >
-              <Icon size={16} className={`${suggestion.color} mt-0.5 flex-shrink-0`} />
-              <div className="flex-1 min-w-0">
-                <div className="text-sm text-gray-700 leading-relaxed mb-1">{suggestion.text}</div>
-                <div className="text-xs text-gray-500 capitalize">{suggestion.type}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <Box sx={{ height: '100%', bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Sparkles size={16} />
+        <Typography variant="body2" fontWeight={500}>AI Suggestions</Typography>
+      </Box>
+      <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
+        <Stack spacing={2}>
+          {suggestions.map((suggestion) => {
+            const Icon = suggestion.icon;
+            return (
+              <Paper
+                key={suggestion.id}
+                variant="outlined"
+                sx={{ p: 2, cursor: 'pointer', '&:hover': { borderColor: 'primary.main' } }}
+              >
+                <Stack direction="row" spacing={1.5}>
+                  <Icon size={16} style={{ marginTop: 2, flexShrink: 0 }} />
+                  <Box>
+                    <Typography variant="body2" gutterBottom>{suggestion.text}</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'capitalize' }}>
+                      {suggestion.type}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Paper>
+            );
+          })}
+        </Stack>
+      </Box>
+    </Box>
   );
 }

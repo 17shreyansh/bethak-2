@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Box, AppBar, Toolbar, Typography, IconButton, Chip, Stack, Tabs, Tab } from '@mui/material';
 import { Allotment } from 'allotment';
 import 'allotment/dist/style.css';
 import { usePanelStore } from './store/usePanelStore';
@@ -25,52 +26,43 @@ const PANELS = {
 
 function TabBar({ tabs, activeTab, onTabClick, onTabClose, region }) {
   return (
-    <div className="h-11 bg-gradient-to-r from-slate-50 to-gray-50 border-b border-slate-200/60 flex items-center overflow-x-auto scrollbar-hide">
-      {tabs.map((tabId, index) => {
-        const panel = PANELS[tabId];
-        const Icon = panel.icon;
-        const isActive = activeTab === tabId;
-        
-        return (
-          <div
-            key={tabId}
-            draggable
-            onDragStart={(e) => {
-              e.dataTransfer.setData('panelId', tabId);
-              e.dataTransfer.setData('fromRegion', region);
-            }}
-            onClick={() => onTabClick(tabId)}
-            className={`
-              relative h-11 px-4 flex items-center gap-2.5 cursor-pointer group transition-all duration-200 min-w-fit
-              ${isActive 
-                ? 'bg-white text-slate-900 shadow-sm border-b-2 border-blue-500' 
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+    <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'grey.50' }}>
+      <Tabs value={activeTab} onChange={(e, val) => onTabClick(val)} variant="scrollable" scrollButtons="auto">
+        {tabs.map((tabId) => {
+          const panel = PANELS[tabId];
+          const Icon = panel.icon;
+          return (
+            <Tab
+              key={tabId}
+              value={tabId}
+              label={
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Icon size={16} />
+                  <span>{panel.title}</span>
+                  {tabs.length > 1 && (
+                    <IconButton
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onTabClose(tabId);
+                      }}
+                      sx={{ ml: 0.5, p: 0.25 }}
+                    >
+                      <X size={12} />
+                    </IconButton>
+                  )}
+                </Stack>
               }
-              ${index > 0 ? 'border-l border-slate-200/60' : ''}
-            `}
-          >
-            <Icon size={15} className={isActive ? panel.color : 'text-slate-500'} />
-            <span className="text-sm font-medium tracking-tight">{panel.title}</span>
-            
-            {tabs.length > 1 && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onTabClose(tabId);
-                }}
-                className="opacity-0 group-hover:opacity-100 ml-1 p-0.5 hover:bg-slate-200 rounded transition-all duration-150"
-              >
-                <X size={12} className="text-slate-500" />
-              </button>
-            )}
-            
-            {isActive && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-600" />
-            )}
-          </div>
-        );
-      })}
-    </div>
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.setData('panelId', tabId);
+                e.dataTransfer.setData('fromRegion', region);
+              }}
+            />
+          );
+        })}
+      </Tabs>
+    </Box>
   );
 }
 
@@ -79,8 +71,17 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
   const Component = PANELS[activeTab]?.component;
 
   return (
-    <div
-      className="h-full bg-white border border-slate-200/80 rounded-lg overflow-hidden shadow-sm"
+    <Box
+      sx={{
+        height: '100%',
+        bgcolor: 'background.paper',
+        borderRadius: 1,
+        overflow: 'hidden',
+        boxShadow: 1,
+        border: 1,
+        borderColor: 'divider',
+        position: 'relative'
+      }}
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);
@@ -97,7 +98,7 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
       }}
     >
       {dragOver && (
-        <div className="absolute inset-0 bg-blue-500/10 border-2 border-blue-500 rounded-lg z-50 pointer-events-none" />
+        <Box sx={{ position: 'absolute', inset: 0, bgcolor: 'primary.light', opacity: 0.1, border: 2, borderColor: 'primary.main', borderRadius: 1, zIndex: 50, pointerEvents: 'none' }} />
       )}
       
       <TabBar
@@ -108,10 +109,10 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
         region={region}
       />
       
-      <div className="h-[calc(100%-2.75rem)] overflow-auto bg-white">
+      <Box sx={{ height: 'calc(100% - 48px)', overflow: 'auto', bgcolor: 'background.paper' }}>
         {Component && <Component />}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
@@ -136,37 +137,29 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-100 flex flex-col">
-      <div className="h-14 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-6 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-lg">
-            <LayoutDashboard size={18} className="text-white" />
-          </div>
-          <div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              Room Workspace
-            </h1>
-            <p className="text-xs text-slate-500 -mt-0.5">Collaborative workspace</p>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100/60 rounded-lg">
-            <Zap size={14} className="text-amber-500" />
-            <span className="text-xs font-medium text-slate-600">Live</span>
-          </div>
+    <Box sx={{ height: '100vh', width: '100vw', bgcolor: 'grey.100', display: 'flex', flexDirection: 'column' }}>
+      <AppBar position="static" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Box sx={{ p: 1, background: 'linear-gradient(135deg, #1976d2, #9c27b0)', borderRadius: 1, boxShadow: 2 }}>
+              <LayoutDashboard size={18} color="white" />
+            </Box>
+            <Box>
+              <Typography variant="h6" fontWeight={700}>Room Workspace</Typography>
+              <Typography variant="caption" color="text.secondary">Collaborative workspace</Typography>
+            </Box>
+          </Stack>
           
-          <button
-            onClick={() => setCmdOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-sm bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-all duration-200 shadow-lg hover:shadow-xl"
-          >
-            <Command size={14} />
-            <span className="font-medium">⌘K</span>
-          </button>
-        </div>
-      </div>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Chip icon={<Zap size={14} />} label="Live" size="small" color="warning" variant="outlined" />
+            <IconButton onClick={() => setCmdOpen(true)} sx={{ bgcolor: 'grey.900', color: 'white', '&:hover': { bgcolor: 'grey.800' } }}>
+              <Command size={16} />
+            </IconButton>
+          </Stack>
+        </Toolbar>
+      </AppBar>
 
-      <div className="flex-1 p-3">
+      <Box sx={{ flex: 1, p: 2 }}>
         <Allotment>
           {layout.left.length > 0 && (
             <Allotment.Pane minSize={220} preferredSize={280}>
@@ -237,7 +230,7 @@ export default function App() {
             </Allotment.Pane>
           )}
         </Allotment>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

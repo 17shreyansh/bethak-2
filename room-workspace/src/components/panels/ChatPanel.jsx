@@ -1,3 +1,4 @@
+import { Box, TextField, IconButton, Stack, Avatar, Typography, Paper } from '@mui/material';
 import { Send, Paperclip, Smile } from 'lucide-react';
 
 export default function ChatPanel() {
@@ -9,45 +10,49 @@ export default function ChatPanel() {
   ];
 
   return (
-    <div className="h-full bg-white flex flex-col">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((msg) => (
-          <div key={msg.id} className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-600 flex-shrink-0">
-              {msg.avatar}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-sm font-medium text-gray-700">{msg.user}</span>
-                <span className="text-xs text-gray-400">{msg.time}</span>
-              </div>
-              <div className="text-sm text-gray-600 leading-relaxed">{msg.text}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="border-t border-gray-200 p-4">
-        <div className="flex gap-2 items-end">
-          <div className="flex-1 flex flex-col gap-2">
-            <textarea
+    <Box sx={{ height: '100%', bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
+        <Stack spacing={2}>
+          {messages.map((msg) => (
+            <Stack key={msg.id} direction="row" spacing={1.5}>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'grey.400', fontSize: '0.75rem' }}>
+                {msg.avatar}
+              </Avatar>
+              <Box sx={{ flex: 1 }}>
+                <Stack direction="row" spacing={1} alignItems="baseline">
+                  <Typography variant="body2" fontWeight={500}>{msg.user}</Typography>
+                  <Typography variant="caption" color="text.secondary">{msg.time}</Typography>
+                </Stack>
+                <Typography variant="body2" color="text.secondary">{msg.text}</Typography>
+              </Box>
+            </Stack>
+          ))}
+        </Stack>
+      </Box>
+      <Box sx={{ borderTop: 1, borderColor: 'divider', p: 2 }}>
+        <Stack direction="row" spacing={1} alignItems="flex-end">
+          <Box sx={{ flex: 1 }}>
+            <TextField
+              fullWidth
+              multiline
+              rows={2}
               placeholder="Type a message..."
-              rows="2"
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300 resize-none"
+              size="small"
             />
-            <div className="flex gap-2">
-              <button className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded transition-colors">
+            <Stack direction="row" spacing={0.5} sx={{ mt: 1 }}>
+              <IconButton size="small">
                 <Paperclip size={16} />
-              </button>
-              <button className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded transition-colors">
+              </IconButton>
+              <IconButton size="small">
                 <Smile size={16} />
-              </button>
-            </div>
-          </div>
-          <button className="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors h-fit">
+              </IconButton>
+            </Stack>
+          </Box>
+          <IconButton color="primary" sx={{ bgcolor: 'primary.main', color: 'white', '&:hover': { bgcolor: 'primary.dark' } }}>
             <Send size={16} />
-          </button>
-        </div>
-      </div>
-    </div>
+          </IconButton>
+        </Stack>
+      </Box>
+    </Box>
   );
 }

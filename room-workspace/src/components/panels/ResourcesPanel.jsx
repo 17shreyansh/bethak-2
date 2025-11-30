@@ -1,4 +1,5 @@
-import { Link, Upload, File, ExternalLink } from 'lucide-react';
+import { Box, Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Upload, File, ExternalLink } from 'lucide-react';
 
 export default function ResourcesPanel() {
   const resources = [
@@ -10,32 +11,28 @@ export default function ResourcesPanel() {
   ];
 
   return (
-    <div className="h-full bg-white flex flex-col">
-      <div className="p-3 border-b border-gray-200">
-        <button className="w-full flex items-center justify-center gap-2 px-3 py-1.5 text-sm text-gray-700 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors">
-          <Upload size={16} />
+    <Box sx={{ height: '100%', bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+        <Button fullWidth variant="outlined" startIcon={<Upload size={16} />}>
           Upload
-        </button>
-      </div>
-      <div className="flex-1 overflow-y-auto p-2">
+        </Button>
+      </Box>
+      <List sx={{ flex: 1, overflow: 'auto', p: 1 }}>
         {resources.map((resource) => {
           const Icon = resource.icon;
           return (
-            <div
-              key={resource.id}
-              className="flex items-center gap-3 p-2.5 rounded-md hover:bg-gray-50 cursor-pointer transition-colors"
-            >
-              <Icon size={16} className="text-gray-400 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-gray-700 truncate">{resource.name}</div>
-                <div className="text-xs text-gray-500">
-                  {resource.type} {resource.size && `• ${resource.size}`}
-                </div>
-              </div>
-            </div>
+            <ListItem key={resource.id} sx={{ borderRadius: 1, '&:hover': { bgcolor: 'grey.50' } }}>
+              <ListItemIcon sx={{ minWidth: 32 }}>
+                <Icon size={16} />
+              </ListItemIcon>
+              <ListItemText
+                primary={resource.name}
+                secondary={`${resource.type}${resource.size ? ` • ${resource.size}` : ''}`}
+              />
+            </ListItem>
           );
         })}
-      </div>
-    </div>
+      </List>
+    </Box>
   );
 }
