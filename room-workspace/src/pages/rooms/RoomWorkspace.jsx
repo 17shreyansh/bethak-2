@@ -1,113 +1,194 @@
-import { useParams } from 'react-router-dom';
-import { Box, Container, Typography, Paper, Tabs, Tab, Stack, Avatar, AvatarGroup, IconButton, Chip } from '@mui/material';
-import { Settings, Users, MessageSquare, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
-import CanvasSpace from '../../components/CanvasSpace';
-import { useRoomsStore } from '../../store/useRoomsStore';
-import { useAuthStore } from '../../store/useAuthStore';
 
 export default function RoomWorkspace() {
-  const { id } = useParams();
-  const { rooms } = useRoomsStore();
-  const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState(0);
   
-  const room = rooms.find(r => r.id === parseInt(id));
+  const room = {
+    id: 1,
+    name: 'Project Room',
+    icon: '🚀',
+    category: 'Development',
+    tags: ['React', 'Frontend']
+  };
 
-  if (!room) {
-    return (
-      <Box sx={{ p: 4 }}>
-        <Typography>Room not found</Typography>
-      </Box>
-    );
-  }
+  const user = { name: 'User' };
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
-      <Paper sx={{ borderRadius: 0, mb: 2 }}>
-        <Container maxWidth="xl">
-          <Stack direction="row" alignItems="center" justifyContent="space-between" py={2}>
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Box
-                sx={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 2,
-                  bgcolor: 'primary.main',
+    <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+      <div style={{ backgroundColor: 'white', marginBottom: '16px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '8px',
+                backgroundColor: '#1976d2',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.5rem'
+              }}>
+                {room.icon}
+              </div>
+              <div>
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>
+                  {room.name}
+                </h2>
+                <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                  <span style={{
+                    padding: '4px 8px',
+                    backgroundColor: '#e3f2fd',
+                    borderRadius: '16px',
+                    fontSize: '0.75rem'
+                  }}>
+                    {room.category}
+                  </span>
+                  {room.tags?.map(tag => (
+                    <span key={tag} style={{
+                      padding: '4px 8px',
+                      border: '1px solid #ccc',
+                      borderRadius: '16px',
+                      fontSize: '0.75rem'
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '4px' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#1976d2',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.5rem',
-                }}
-              >
-                {room.icon || '🚀'}
-              </Box>
-              <Box>
-                <Typography variant="h5" fontWeight={700}>
-                  {room.name}
-                </Typography>
-                <Stack direction="row" spacing={1} mt={0.5}>
-                  <Chip label={room.category} size="small" />
-                  {room.tags?.map(tag => (
-                    <Chip key={tag} label={tag} size="small" variant="outlined" />
-                  ))}
-                </Stack>
-              </Box>
-            </Stack>
-
-            <Stack direction="row" spacing={2} alignItems="center">
-              <AvatarGroup max={4}>
-                <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+                  color: 'white',
+                  fontSize: '0.875rem'
+                }}>
                   {user?.name?.[0] || 'U'}
-                </Avatar>
-                <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>A</Avatar>
-                <Avatar sx={{ width: 32, height: 32, bgcolor: 'success.main' }}>B</Avatar>
-              </AvatarGroup>
-              <IconButton>
-                <MessageSquare size={20} />
-              </IconButton>
+                </div>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#9c27b0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '0.875rem'
+                }}>A</div>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#2e7d32',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '0.875rem'
+                }}>B</div>
+              </div>
+              <button style={{
+                background: 'none',
+                border: 'none',
+                padding: '8px',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}>💬</button>
+              <button style={{
+                background: 'none',
+                border: 'none',
+                padding: '8px',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}>⚙️</button>
+            </div>
+          </div>
 
-              <IconButton>
-                <Settings size={20} />
-              </IconButton>
-            </Stack>
-          </Stack>
+          <div style={{ marginTop: '16px', borderBottom: '1px solid #e0e0e0' }}>
+            <div style={{ display: 'flex', gap: '32px' }}>
+              {['Canvas Space', 'Files', 'Chat', 'Activity'].map((tab, index) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(index)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: '12px 0',
+                    cursor: 'pointer',
+                    borderBottom: activeTab === index ? '2px solid #1976d2' : '2px solid transparent',
+                    color: activeTab === index ? '#1976d2' : '#666',
+                    fontWeight: activeTab === index ? 600 : 400
+                  }}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
-          <Tabs 
-            value={activeTab} 
-            onChange={(e, v) => setActiveTab(v)}
-            variant="standard"
-            sx={{
-              '& .MuiTabs-scrollButtons': { display: 'none' },
-              '& .MuiTabs-scroller': { overflow: 'visible !important' }
-            }}
-          >
-            <Tab label="Canvas Space" />
-            <Tab label="Files" />
-            <Tab label="Chat" />
-            <Tab label="Activity" />
-          </Tabs>
-        </Container>
-      </Paper>
-
-      <Container maxWidth="xl" sx={{ py: 0 }}>
-        {activeTab === 0 && <CanvasSpace />}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 16px' }}>
+        {activeTab === 0 && (
+          <div style={{
+            backgroundColor: 'white',
+            padding: '32px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            minHeight: '400px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <h3>Canvas Space</h3>
+              <p style={{ color: '#666' }}>Interactive workspace area</p>
+            </div>
+          </div>
+        )}
         {activeTab === 1 && (
-          <Paper sx={{ p: 4, textAlign: 'center' }}>
-            <Typography color="text.secondary">Files view coming soon</Typography>
-          </Paper>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '32px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            textAlign: 'center'
+          }}>
+            <p style={{ color: '#666' }}>Files view coming soon</p>
+          </div>
         )}
         {activeTab === 2 && (
-          <Paper sx={{ p: 4, textAlign: 'center' }}>
-            <Typography color="text.secondary">Chat view coming soon</Typography>
-          </Paper>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '32px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            textAlign: 'center'
+          }}>
+            <p style={{ color: '#666' }}>Chat view coming soon</p>
+          </div>
         )}
         {activeTab === 3 && (
-          <Paper sx={{ p: 4, textAlign: 'center' }}>
-            <Typography color="text.secondary">Activity view coming soon</Typography>
-          </Paper>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '32px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            textAlign: 'center'
+          }}>
+            <p style={{ color: '#666' }}>Activity view coming soon</p>
+          </div>
         )}
-      </Container>
-    </Box>
+      </div>
+    </div>
   );
 }
