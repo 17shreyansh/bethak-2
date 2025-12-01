@@ -29,7 +29,7 @@ export default function CreateRoom() {
       active: true,
     };
     addRoom(newRoom);
-    navigate(`/workspace/${newRoom.id}`);
+    navigate(`/rooms/${newRoom.id}`);
   };
 
   const steps = ['Basic Info', 'Category & Tags', 'Settings'];

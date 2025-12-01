@@ -7,6 +7,8 @@ import Signup from './pages/auth/Signup';
 import Dashboard from './pages/dashboard/Dashboard';
 import ExploreRooms from './pages/rooms/ExploreRooms';
 import CreateRoom from './pages/rooms/CreateRoom';
+import RoomWorkspace from './pages/rooms/RoomWorkspace';
+import KanbanDemo from './pages/rooms/KanbanDemo';
 import PeopleSearch from './pages/people/PeopleSearch';
 import Profile from './pages/profile/Profile';
 import Search from './pages/Search';
@@ -35,6 +37,8 @@ export default function AppRouter() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/rooms" element={<ExploreRooms />} />
           <Route path="/rooms/create" element={<CreateRoom />} />
+          <Route path="/rooms/:id" element={<RoomWorkspace />} />
+          <Route path="/kanban-demo" element={<KanbanDemo />} />
           <Route path="/people" element={<PeopleSearch />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/search" element={<Search />} />

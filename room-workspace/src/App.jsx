@@ -24,10 +24,17 @@ const PANELS = {
   ai: { component: AIPanel, icon: Sparkles, title: 'AI', color: 'text-violet-600' },
 };
 
-function TabBar({ tabs, activeTab, onTabClick, onTabClose, region }) {
+function TabBar({ tabs, activeTab, onTabClick, onTabClose }) {
   return (
     <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'grey.50' }}>
-      <Tabs value={activeTab} onChange={(e, val) => onTabClick(val)} variant="scrollable" scrollButtons="auto">
+      <Tabs 
+        value={activeTab} 
+        onChange={(e, val) => onTabClick(val)} 
+        variant="standard"
+        sx={{
+          '& .MuiTabs-scrollButtons': { display: 'none' },
+        }}
+      >
         {tabs.map((tabId) => {
           const panel = PANELS[tabId];
           const Icon = panel.icon;
@@ -53,11 +60,7 @@ function TabBar({ tabs, activeTab, onTabClick, onTabClose, region }) {
                   )}
                 </Stack>
               }
-              draggable
-              onDragStart={(e) => {
-                e.dataTransfer.setData('panelId', tabId);
-                e.dataTransfer.setData('fromRegion', region);
-              }}
+
             />
           );
         })}
@@ -66,8 +69,7 @@ function TabBar({ tabs, activeTab, onTabClick, onTabClose, region }) {
   );
 }
 
-function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }) {
-  const [dragOver, setDragOver] = useState(false);
+function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose }) {
   const Component = PANELS[activeTab]?.component;
 
   return (
@@ -80,33 +82,14 @@ function PanelRegion({ region, tabs, activeTab, onTabClick, onTabClose, onDrop }
         boxShadow: 1,
         border: 1,
         borderColor: 'divider',
-        position: 'relative'
-      }}
-      onDragOver={(e) => {
-        e.preventDefault();
-        setDragOver(true);
-      }}
-      onDragLeave={() => setDragOver(false)}
-      onDrop={(e) => {
-        e.preventDefault();
-        setDragOver(false);
-        const panelId = e.dataTransfer.getData('panelId');
-        const fromRegion = e.dataTransfer.getData('fromRegion');
-        if (panelId && fromRegion !== region) {
-          onDrop(panelId, fromRegion, region);
-        }
       }}
     >
-      {dragOver && (
-        <Box sx={{ position: 'absolute', inset: 0, bgcolor: 'primary.light', opacity: 0.1, border: 2, borderColor: 'primary.main', borderRadius: 1, zIndex: 50, pointerEvents: 'none' }} />
-      )}
       
       <TabBar
         tabs={tabs}
         activeTab={activeTab}
         onTabClick={onTabClick}
         onTabClose={onTabClose}
-        region={region}
       />
       
       <Box sx={{ height: 'calc(100% - 48px)', overflow: 'auto', bgcolor: 'background.paper' }}>
@@ -131,10 +114,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-  const handleDrop = (panelId, fromRegion, toRegion) => {
-    movePanel(panelId, fromRegion, toRegion);
-    setActiveTab(toRegion, panelId);
-  };
+
 
   return (
     <Box sx={{ height: '100vh', width: '100vw', bgcolor: 'grey.100', display: 'flex', flexDirection: 'column' }}>
@@ -169,7 +149,6 @@ export default function App() {
                 activeTab={activeTabs.left || layout.left[0]}
                 onTabClick={(id) => setActiveTab('left', id)}
                 onTabClose={(id) => removePanel(id, 'left')}
-                onDrop={handleDrop}
               />
             </Allotment.Pane>
           )}
@@ -184,7 +163,6 @@ export default function App() {
                     activeTab={activeTabs.top || layout.top[0]}
                     onTabClick={(id) => setActiveTab('top', id)}
                     onTabClose={(id) => removePanel(id, 'top')}
-                    onDrop={handleDrop}
                   />
                 </Allotment.Pane>
               )}
@@ -197,7 +175,6 @@ export default function App() {
                     activeTab={activeTabs.center || layout.center[0]}
                     onTabClick={(id) => setActiveTab('center', id)}
                     onTabClose={(id) => removePanel(id, 'center')}
-                    onDrop={handleDrop}
                   />
                 </Allotment.Pane>
               )}
@@ -210,7 +187,6 @@ export default function App() {
                     activeTab={activeTabs.bottom || layout.bottom[0]}
                     onTabClick={(id) => setActiveTab('bottom', id)}
                     onTabClose={(id) => removePanel(id, 'bottom')}
-                    onDrop={handleDrop}
                   />
                 </Allotment.Pane>
               )}
@@ -225,7 +201,6 @@ export default function App() {
                 activeTab={activeTabs.right || layout.right[0]}
                 onTabClick={(id) => setActiveTab('right', id)}
                 onTabClose={(id) => removePanel(id, 'right')}
-                onDrop={handleDrop}
               />
             </Allotment.Pane>
           )}

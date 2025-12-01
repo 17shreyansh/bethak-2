@@ -22,7 +22,7 @@ Professional React workspace with VS Code-inspired drag-and-drop panel system.
 
 ### 📦 8 Integrated Panels
 1. **Members** - Team members with status
-2. **Kanban** - Task board overview
+2. **Kanban** - Full drag-and-drop task board (NEW! ✨)
 3. **Chat** - Team messaging
 4. **Notes** - Quick notes with search
 5. **Resources** - File management
@@ -30,12 +30,31 @@ Professional React workspace with VS Code-inspired drag-and-drop panel system.
 7. **Tools** - Quick actions
 8. **AI Suggestions** - Smart recommendations
 
+### 🎯 NEW: Full Kanban Board System
+- **Personal Cards** - Each member gets their own card
+- **Drag & Drop** - Move cards between columns smoothly
+- **Task Management** - Add, complete, and delete tasks
+- **Permission-Based** - Only edit your own card
+- **Real-Time Updates** - See team progress instantly
+- **Tutorial Included** - Interactive onboarding guide
+
+📖 **Kanban Guides:**
+- Quick Start: `KANBAN_QUICKSTART.md`
+- Full Guide: `KANBAN_BOARD_GUIDE.md`
+- Implementation: `KANBAN_IMPLEMENTATION.md`
+
 ## 🚀 Quick Start
 
 ```bash
 npm install
 npm run dev
 ```
+
+### Try the Kanban Board
+1. Login/Signup at `http://localhost:5173`
+2. Visit `/kanban-demo` for a quick demo
+3. Or go to `/rooms` and open any room
+4. Click "Kanban Board" tab and start managing tasks!
 
 ## 🎮 How to Use
 
@@ -149,14 +168,24 @@ Edit `defaultLayout` in `usePanelStore.js`
 
 ## 🔧 Future Enhancements
 
+### Workspace
 - [ ] Panel maximize/minimize
 - [ ] Save/load custom layouts
 - [ ] Dark theme
 - [ ] Mobile responsive mode
 - [ ] Panel search
 - [ ] Workspace templates
-- [ ] Collaborative cursors
-- [ ] Real-time sync
+
+### Kanban Board
+- [x] Drag & drop cards
+- [x] Personal user cards
+- [x] Task management
+- [x] Permission system
+- [ ] Real-time collaboration (WebSockets)
+- [ ] Card comments
+- [ ] File attachments
+- [ ] Due dates
+- [ ] Custom columns
 
 ## 📄 License
 

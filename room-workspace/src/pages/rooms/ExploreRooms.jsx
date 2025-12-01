@@ -84,11 +84,11 @@ export default function ExploreRooms() {
                       </Stack>
                       <Button
                         component={Link}
-                        to={`/workspace/${room.id}`}
+                        to={`/rooms/${room.id}`}
                         endIcon={<ArrowRight size={16} />}
                         size="small"
                       >
-                        Join
+                        Open
                       </Button>
                     </Stack>
                   </Stack>
