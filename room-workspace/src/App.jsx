@@ -3,7 +3,7 @@ import { Box, AppBar, Toolbar, Typography, IconButton, Chip, Stack, Tooltip, Bad
 import { Allotment } from 'allotment';
 import 'allotment/dist/style.css';
 import { usePanelStore } from './store/usePanelStore';
-import { glassStyles } from './theme';
+import { minimalStyles } from './theme-togethry';
 
 import MembersPanel from './components/panels/MembersPanel';
 import KanbanPanel from './components/panels/KanbanPanel';
@@ -49,15 +49,13 @@ function ActivityBar({ inactivePanels, onPanelClick, onDragStart }) {
   return (
     <Box sx={{ 
       width: 72, 
-      background: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
-      borderRight: 1,
-      borderColor: 'grey.800',
+      bgcolor: '#fafafa',
+      borderRight: '1px solid #e5e5e5',
       display: 'flex', 
       flexDirection: 'column', 
       alignItems: 'center', 
       py: 2,
       gap: 1.5,
-      boxShadow: '4px 0 12px rgba(0, 0, 0, 0.1)',
     }}>
       {inactivePanels.map((id) => {
         const panel = PANELS[id];
@@ -76,32 +74,20 @@ function ActivityBar({ inactivePanels, onPanelClick, onDragStart }) {
                 width: 48,
                 height: 48,
                 borderRadius: 2,
-                bgcolor: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                bgcolor: 'white',
+                border: '1px solid #e5e5e5',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'grab',
-                color: 'grey.400',
-                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                position: 'relative',
+                color: '#737373',
+                transition: 'all 0.15s ease',
                 '&:active': { cursor: 'grabbing' },
                 '&:hover': {
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  bgcolor: 'white',
+                  borderColor: panel.color,
                   color: panel.color,
-                  transform: 'translateX(4px) scale(1.05)',
-                  boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    left: -8,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: 4,
-                    height: 24,
-                    bgcolor: panel.color,
-                    borderRadius: 2,
-                  },
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                 }
               }}
             >
@@ -117,17 +103,14 @@ function ActivityBar({ inactivePanels, onPanelClick, onDragStart }) {
 function TabBar({ tabs, activeTab, onTabClick, onTabClose, onDragStart }) {
   return (
     <Box sx={{ 
-      borderBottom: 1, 
-      borderColor: 'divider', 
-      bgcolor: 'grey.50',
+      borderBottom: '1px solid #e5e5e5', 
+      bgcolor: '#fafafa',
       display: 'flex',
       minHeight: 44,
       overflowX: 'auto',
-      px: 1,
+      px: 1.5,
       gap: 0.5,
       alignItems: 'center',
-      '&::-webkit-scrollbar': { height: 6 },
-      '&::-webkit-scrollbar-thumb': { bgcolor: 'grey.300', borderRadius: 3 },
     }}>
       {tabs.map((tabId) => {
         const panel = PANELS[tabId];
@@ -147,38 +130,34 @@ function TabBar({ tabs, activeTab, onTabClick, onTabClose, onDragStart }) {
               display: 'flex',
               alignItems: 'center',
               gap: 1,
-              px: 2,
-              py: 1,
-              borderRadius: 2,
+              px: 1.5,
+              py: 0.75,
+              borderRadius: 1,
               cursor: 'pointer',
-              bgcolor: isActive ? 'white' : 'transparent',
-              boxShadow: isActive ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
-              border: isActive ? '1px solid' : '1px solid transparent',
-              borderColor: isActive ? 'grey.200' : 'transparent',
+              bgcolor: isActive ? 'grey.100' : 'transparent',
+              border: '1px solid transparent',
               userSelect: 'none',
-              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              transition: 'all 0.15s ease',
               position: 'relative',
               '&:hover': {
-                bgcolor: isActive ? 'white' : 'grey.100',
-                transform: 'translateY(-1px)',
+                bgcolor: 'grey.100',
               },
               '&:hover .close-btn': {
                 opacity: 1,
               },
-              '&::before': isActive ? {
+              '&::after': isActive ? {
                 content: '""',
                 position: 'absolute',
-                bottom: -1,
-                left: 8,
-                right: 8,
-                height: 3,
-                bgcolor: panel.color,
-                borderRadius: '3px 3px 0 0',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 2,
+                bgcolor: 'primary.main',
               } : {},
             }}
           >
             <Icon size={16} style={{ color: panel.color }} />
-            <Typography variant="body2" fontWeight={isActive ? 600 : 500} sx={{ fontSize: 13, whiteSpace: 'nowrap' }}>
+            <Typography variant="body2" fontWeight={isActive ? 500 : 400} sx={{ fontSize: '0.8125rem', whiteSpace: 'nowrap', color: isActive ? 'text.primary' : 'text.secondary' }}>
               {panel.title}
             </Typography>
             <IconButton
@@ -191,11 +170,11 @@ function TabBar({ tabs, activeTab, onTabClick, onTabClose, onDragStart }) {
               sx={{ 
                 p: 0.25, 
                 ml: 0.5,
-                width: 20,
-                height: 20,
+                width: 18,
+                height: 18,
                 opacity: isActive ? 1 : 0,
-                transition: 'opacity 0.2s',
-                '&:hover': { bgcolor: 'grey.200' },
+                transition: 'opacity 0.15s',
+                '&:hover': { bgcolor: 'grey.300' },
               }}
             >
               <X size={14} />
@@ -264,26 +243,25 @@ function EditorGroup({ groupId, tabs, activeTab, onTabClick, onTabClose, onDragS
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: 'background.paper',
+        bgcolor: 'white',
         position: 'relative',
         overflow: 'hidden',
         borderRadius: 2,
-        border: '1px solid',
-        borderColor: 'divider',
-        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+        border: '1px solid #e5e5e5',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
       }}
     >
       {dropIndicator && (
         <Box
           sx={{
             position: 'absolute',
-            bgcolor: dropIndicator === 'center' ? 'success.main' : 'primary.main',
-            opacity: 0.15,
+            bgcolor: 'primary.main',
+            opacity: 0.1,
             zIndex: 1000,
             pointerEvents: 'none',
             border: '2px dashed',
-            borderColor: dropIndicator === 'center' ? 'success.main' : 'primary.main',
-            transition: 'all 0.12s cubic-bezier(0.4, 0, 0.2, 1)',
+            borderColor: 'primary.main',
+            transition: 'all 0.15s ease',
             ...(dropIndicator === 'center' && { left: 8, right: 8, top: 48, bottom: 8, borderRadius: 1 }),
             ...(dropIndicator === 'left' && { left: 0, top: 0, bottom: 0, width: '50%' }),
             ...(dropIndicator === 'right' && { right: 0, top: 0, bottom: 0, width: '50%' }),
@@ -397,33 +375,30 @@ export default function App() {
         elevation={0}
         sx={{
           bgcolor: 'white',
-          borderBottom: 1,
-          borderColor: 'divider',
+          borderBottom: '1px solid #e5e5e5',
           zIndex: 1300,
-          ...glassStyles,
         }}
       >
-        <Toolbar sx={{ justifyContent: 'space-between', minHeight: 56, px: 3 }}>
+        <Toolbar sx={{ justifyContent: 'space-between', minHeight: { xs: 56, md: 64 }, px: { xs: 2, md: 3 } }}>
           <Stack direction="row" spacing={3} alignItems="center">
             <Stack direction="row" spacing={1.5} alignItems="center">
               <Box
                 sx={{
                   p: 1,
-                  background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-                  borderRadius: 2,
-                  boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
+                  bgcolor: 'primary.main',
+                  borderRadius: 1.5,
                 }}
               >
-                <LayoutDashboard size={20} color="white" />
+                <LayoutDashboard size={18} color="white" />
               </Box>
-              <Typography variant="h6" fontWeight={700} sx={{ background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                Room Workspace
+              <Typography variant="h6" fontWeight={600} color="text.primary" sx={{ display: { xs: 'none', sm: 'block' } }}>
+                Togethry
               </Typography>
             </Stack>
 
             <Divider orientation="vertical" flexItem />
 
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Tooltip title="Search (⌘K)">
                 <IconButton size="small" onClick={() => setCmdOpen(true)}>
                   <Search size={18} />
@@ -437,8 +412,8 @@ export default function App() {
             </Stack>
           </Stack>
           
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Badge badgeContent={3} color="error">
+          <Stack direction="row" spacing={{ xs: 1, md: 2 }} alignItems="center">
+            <Badge badgeContent={3} color="error" sx={{ display: { xs: 'none', sm: 'block' } }}>
               <Tooltip title="Notifications">
                 <IconButton size="small">
                   <Bell size={18} />
@@ -451,6 +426,7 @@ export default function App() {
               label="5 online"
               size="small"
               sx={{
+                display: { xs: 'none', md: 'flex' },
                 bgcolor: 'success.50',
                 color: 'success.700',
                 fontWeight: 600,
@@ -464,6 +440,7 @@ export default function App() {
               label="Live"
               size="small"
               sx={{
+                display: { xs: 'none', md: 'flex' },
                 bgcolor: 'warning.50',
                 color: 'warning.700',
                 fontWeight: 600,
@@ -516,14 +493,16 @@ export default function App() {
 
       <Box sx={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         {getInactivePanels().length > 0 && (
-          <ActivityBar 
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+            <ActivityBar 
             inactivePanels={getInactivePanels()}
             onPanelClick={handleActivityBarClick}
             onDragStart={handleDragStart}
           />
+          </Box>
         )}
 
-        <Box sx={{ flex: 1, p: 2 }}>
+        <Box sx={{ flex: 1, p: { xs: 1, sm: 2, md: 3 }, bgcolor: '#fafafa' }}>
           <Allotment snap>
             {layout.left.length > 0 && (
               <Allotment.Pane minSize={180} preferredSize={300}>

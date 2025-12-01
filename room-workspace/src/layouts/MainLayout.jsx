@@ -29,7 +29,7 @@ export default function MainLayout() {
                 <Box sx={{ width: 32, height: 32, bgcolor: 'grey.900', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <LayoutDashboard size={18} color="white" />
                 </Box>
-                <Typography variant="h6" fontWeight={600}>Bethak</Typography>
+                <Typography variant="h6" fontWeight={600}>Togethry</Typography>
               </Stack>
             </Button>
             

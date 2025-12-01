@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/useAuthStore';
-import MainLayout from './layouts/MainLayout';
+import MainLayoutTogethry from './layouts/MainLayoutTogethry';
 import Landing from './pages/Landing';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
-import Dashboard from './pages/dashboard/Dashboard';
-import ExploreRooms from './pages/rooms/ExploreRooms';
+import DashboardTogethry from './pages/dashboard/DashboardTogethry';
+import ExploreRoomsTogethry from './pages/rooms/ExploreRoomsTogethry';
 import CreateRoom from './pages/rooms/CreateRoom';
 import RoomWorkspace from './pages/rooms/RoomWorkspace';
 import KanbanDemo from './pages/rooms/KanbanDemo';
@@ -33,9 +33,9 @@ export default function AppRouter() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
         
-        <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/rooms" element={<ExploreRooms />} />
+        <Route element={<ProtectedRoute><MainLayoutTogethry /></ProtectedRoute>}>
+          <Route path="/dashboard" element={<DashboardTogethry />} />
+          <Route path="/rooms" element={<ExploreRoomsTogethry />} />
           <Route path="/rooms/create" element={<CreateRoom />} />
           <Route path="/rooms/:id" element={<RoomWorkspace />} />
           <Route path="/kanban-demo" element={<KanbanDemo />} />

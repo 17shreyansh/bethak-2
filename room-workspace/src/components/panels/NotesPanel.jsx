@@ -11,7 +11,7 @@ export default function NotesPanel() {
 
   return (
     <Box sx={{ height: '100%', bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ p: 1.5, borderBottom: 1, borderColor: 'divider' }}>
         <TextField
           fullWidth
           size="small"
@@ -23,15 +23,28 @@ export default function NotesPanel() {
               </InputAdornment>
             ),
           }}
-          sx={{ mb: 1 }}
+          sx={{ mb: 1.5 }}
         />
-        <Button fullWidth variant="outlined" startIcon={<Plus size={16} />}>
+        <Button fullWidth variant="contained" startIcon={<Plus size={16} />} size="small">
           New Note
         </Button>
       </Box>
       <List sx={{ flex: 1, overflow: 'auto', p: 1 }}>
         {notes.map((note) => (
-          <ListItem key={note.id} sx={{ borderRadius: 1, '&:hover': { bgcolor: 'grey.50' }, alignItems: 'flex-start' }}>
+          <ListItem 
+            key={note.id} 
+            sx={{ 
+              borderRadius: 1, 
+              mb: 0.5,
+              border: '1px solid transparent',
+              '&:hover': { 
+                bgcolor: 'grey.50',
+                borderColor: 'divider',
+              }, 
+              alignItems: 'flex-start',
+              cursor: 'pointer',
+            }}
+          >
             <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}>
               <FileText size={16} />
             </ListItemIcon>
@@ -39,8 +52,8 @@ export default function NotesPanel() {
               primary={<Typography variant="body2" fontWeight={500}>{note.title}</Typography>}
               secondary={
                 <>
-                  <Typography variant="caption" display="block">{note.date}</Typography>
-                  <Typography variant="caption" color="text.secondary">{note.preview}</Typography>
+                  <Typography variant="caption" display="block" color="text.secondary">{note.date}</Typography>
+                  <Typography variant="caption" color="text.secondary" sx={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{note.preview}</Typography>
                 </>
               }
             />

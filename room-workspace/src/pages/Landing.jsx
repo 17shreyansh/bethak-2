@@ -11,7 +11,7 @@ export default function Landing() {
             <Box sx={{ width: 32, height: 32, bgcolor: 'grey.900', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Layout size={18} color="white" />
             </Box>
-            <Typography variant="h6" fontWeight={600}>Bethak</Typography>
+            <Typography variant="h6" fontWeight={600}>Togethry</Typography>
           </Stack>
           <Stack direction="row" spacing={2}>
             <Button component={Link} to="/login" color="inherit">Login</Button>
@@ -22,10 +22,10 @@ export default function Landing() {
 
       <Container maxWidth="md" sx={{ py: 12, textAlign: 'center' }}>
         <Typography variant="h2" fontWeight={700} gutterBottom>
-          Collaborate in Real-Time<br />Workspaces
+          Work Together,<br />Beautifully Simple
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
-          Create project rooms with customizable panels. Chat, plan, and build together in one unified workspace.
+          Togethry is a minimal, modern workspace where teams collaborate inside customizable rooms and modular panels.
         </Typography>
         <Stack direction="row" spacing={2} justifyContent="center">
           <Button component={Link} to="/signup" variant="contained" size="large" endIcon={<ArrowRight size={18} />}>
@@ -45,9 +45,9 @@ export default function Landing() {
                 <Box sx={{ width: 48, height: 48, bgcolor: 'grey.100', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
                   <Layout size={24} />
                 </Box>
-                <Typography variant="h6" fontWeight={600} gutterBottom>Flexible Workspaces</Typography>
+                <Typography variant="h6" fontWeight={600} gutterBottom>Modular Panels</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Drag-and-drop panels like VS Code. Customize your workspace layout for any project.
+                  Drag, resize, and arrange panels. Build your perfect workspace layout.
                 </Typography>
               </CardContent>
             </Card>
@@ -59,9 +59,9 @@ export default function Landing() {
                 <Box sx={{ width: 48, height: 48, bgcolor: 'grey.100', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
                   <MessageSquare size={24} />
                 </Box>
-                <Typography variant="h6" fontWeight={600} gutterBottom>Real-Time Collaboration</Typography>
+                <Typography variant="h6" fontWeight={600} gutterBottom>Everything in One Place</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Chat, kanban boards, notes, and file sharing all in one place. Stay in sync with your team.
+                  Chat, tasks, notes, files, whiteboard, and AI assistant. All synchronized in real-time.
                 </Typography>
               </CardContent>
             </Card>
@@ -73,9 +73,9 @@ export default function Landing() {
                 <Box sx={{ width: 48, height: 48, bgcolor: 'grey.100', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
                   <Users size={24} />
                 </Box>
-                <Typography variant="h6" fontWeight={600} gutterBottom>Find Collaborators</Typography>
+                <Typography variant="h6" fontWeight={600} gutterBottom>Fast & Minimal</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Discover people with the right skills. Build teams and work on projects together.
+                  Clean interface inspired by Linear and Notion. No clutter, just productivity.
                 </Typography>
               </CardContent>
             </Card>
@@ -90,9 +90,9 @@ export default function Landing() {
               <Box sx={{ width: 32, height: 32, bgcolor: 'grey.900', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Layout size={18} color="white" />
               </Box>
-              <Typography variant="h6" fontWeight={600}>Bethak</Typography>
+              <Typography variant="h6" fontWeight={600}>Togethry</Typography>
             </Stack>
-            <Typography variant="body2" color="text.secondary">© 2024 Bethak. All rights reserved.</Typography>
+            <Typography variant="body2" color="text.secondary">© 2024 Togethry. All rights reserved.</Typography>
           </Stack>
         </Container>
       </Box>

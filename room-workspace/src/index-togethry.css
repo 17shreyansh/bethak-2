@@ -1,0 +1,105 @@
+/* Togethry Global Styles - Minimal & Modern */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #fafafa;
+}
+
+/* Clean Allotment Styling */
+.split-view-view {
+  background: transparent !important;
+}
+
+.sash {
+  background: #e5e5e5 !important;
+  transition: background 0.15s ease !important;
+  z-index: 10 !important;
+}
+
+.sash:hover {
+  background: #2563eb !important;
+}
+
+.sash-active {
+  background: #1d4ed8 !important;
+}
+
+.sash.-vertical {
+  width: 1px !important;
+}
+
+.sash.-horizontal {
+  height: 1px !important;
+}
+
+/* Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Subtle Transitions */
+button, a, [role="button"] {
+  transition: all 0.15s ease;
+}
+
+/* Focus States */
+button:focus-visible, [role="button"]:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Drag States */
+[draggable="true"] {
+  cursor: grab;
+}
+
+[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease;
+}
